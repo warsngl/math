@@ -16,6 +16,7 @@ export default {
       question: null,
       result: -1,
       answers: [],
+      time:null
     };
   },
   computed: {
@@ -34,22 +35,25 @@ export default {
       return Math.trunc(Math.random() * (max - min)) + min;
     },
     submit() {
-      const success = this.answer == this.rightAnswer;
-      success && this.result++;
-      this.answers.push({ success, question: this.question, answer: this.answer });
-      let a = this.rnd();
-      let b = this.rnd();
-      switch (this.action) {
-        case "+":
-          this.question = a + " + " + b + " = ";
-          this.rightAnswer = +a + b;
-          break;
-        case "*":
-          this.question = a + " * " + b + "= ";
-          this.rightAnswer = +a * b;
-          break;
+      if(answer){
+        const success = this.answer == this.rightAnswer;
+        success && this.result++;
+        this.answers.push({ success, question: this.question, answer: this.answer, time:(perfomance.now()-this.time)/1000 });
+        let a = this.rnd();
+        let b = this.rnd();
+        switch (this.action) {
+          case "+":
+            this.question = a + " + " + b + " = ";
+            this.rightAnswer = +a + b;
+            break;
+          case "*":
+            this.question = a + " * " + b + "= ";
+            this.rightAnswer = +a * b;
+            break;
+        }
+        this.answer = "";
+        this.time=perfomance.now()
       }
-      this.answer = "";
     },
     finish() {
       this.$store.commit("finish", { answers: this.answers });
