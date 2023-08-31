@@ -14,7 +14,7 @@ export default {
       answer: null,
       rightAnswer: null,
       question: null,
-      result: -1,
+      result: 0,
       answers: [],
       time:null
     };
@@ -31,37 +31,44 @@ export default {
     },
   },
   methods: {
-    rnd(min = this.min, max = this.max) {
+    rnd(min = this.min, max = this.max+1) {
       return Math.trunc(Math.random() * (max - min)) + min;
     },
     submit() {
-      if(answer){
+      if(this.answer){
         const success = this.answer == this.rightAnswer;
+
         success && this.result++;
-        this.answers.push({ success, question: this.question, answer: this.answer, time:(perfomance.now()-this.time)/1000 });
-        let a = this.rnd();
-        let b = this.rnd();
-        switch (this.action) {
-          case "+":
-            this.question = a + " + " + b + " = ";
-            this.rightAnswer = +a + b;
-            break;
-          case "*":
-            this.question = a + " * " + b + "= ";
-            this.rightAnswer = +a * b;
-            break;
-        }
+        this.answers.push({ success, question: this.question, answer: this.answer, time:(performance.now()-this.time)/1000 });
+
+        this.newQuestion()
         this.answer = "";
-        this.time=perfomance.now()
       }
+    },
+    newQuestion(){
+      let a = this.rnd();
+      let b = this.rnd();
+      switch (this.action) {
+        case "+":
+          this.question = a + " + " + b + " = ";
+          this.rightAnswer = +a + b;
+          break;
+        case "*":
+          this.question = a + " * " + b + "= ";
+          this.rightAnswer = +a * b;
+          break;
+      }
+      this.time=performance.now()
     },
     finish() {
       this.$store.commit("finish", { answers: this.answers });
+      this.result=0
+      this.answers=[]
       this.$router.push("/settings")
     },
   },
   mounted() {
-    this.submit();
+    this.newQuestion();
   },
 };
 </script>

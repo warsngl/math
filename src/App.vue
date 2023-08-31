@@ -1,5 +1,6 @@
 <script>
 import TheNavbar from "./components/TheNavbar.vue";
+
 export default {
   mounted() {
     this.$store.commit("initialAnswers");
@@ -11,7 +12,9 @@ export default {
 <template lang="pug">
 TheNavbar.mb-8
 .flex.flex-col.items-center
-  router-view
+  router-view(v-slot="{ Component }")
+    keep-alive
+      component(:is="Component" :key="$route.fullPath")
 </template>
 
 <style>
