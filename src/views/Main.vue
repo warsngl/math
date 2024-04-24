@@ -1,8 +1,10 @@
 <template lang="pug">
 .flex.items-center.mb-2
   p.text-2xl.font-bold.border-b.border-transparent {{ question }}
-  input.answer.w-10(v-model="answer" @keydown.enter="submit")
-button.btn.bg-white.mb-6(@click='submit') Ответить
+  input.answer.w-10(v-model="answer" @keydown.enter="submit" ref="answerInput")
+  .relative
+    span.text-xs.absolute(v-if="action=='/'") ост.
+button.btn.bg-green-400.mb-6(@click='submit') Ответить
 p.text-2xl Счет: {{ result }}
 button.btn.bg-pink-600(@click='finish') Закончить
 </template>
@@ -29,6 +31,9 @@ export default {
     action() {
       return this.$store.state.action;
     },
+    page(){
+      return this.$route.path
+    }
   },
   methods: {
     rnd(min = this.min, max = this.max+1) {
@@ -43,6 +48,7 @@ export default {
 
         this.newQuestion()
         this.answer = "";
+        this.$refs.answerInput.focus()
       }
     },
     newQuestion(){
@@ -54,8 +60,15 @@ export default {
           this.rightAnswer = +a + b;
           break;
         case "*":
+          //reduce difficulty of b to min value
+          b=this.rnd(this.min,this.min+10)
           this.question = a + " * " + b + "= ";
           this.rightAnswer = +a * b;
+          break;
+        case "/":
+          a<b && ([a,b]=[b,a])
+          this.question = a + " / " + b + "= ";
+          this.rightAnswer = +a % b;
           break;
       }
       this.time=performance.now()
@@ -66,6 +79,11 @@ export default {
       this.answers=[]
       this.$router.push("/settings")
     },
+  },
+  watch:{
+    page(){
+      this.newQuestion()
+    }
   },
   mounted() {
     this.newQuestion();

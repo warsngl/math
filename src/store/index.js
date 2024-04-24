@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 const store = createStore({
   state() {
     return {
-      min: 1,
+      min: 2,
       max: 10,
       action: '+',
       answers: [],

@@ -3,11 +3,12 @@ span Действие
   select.select(v-model="action")
     option(value="+") +
     option(value="*") *
+    option(value="/") /
 span Min
-  input.answer.w-16(type="number" v-model="min")
+  input.answer.w-16(type="number" min="2" v-model="min")
 span Max
   input.answer.w-16(type="number" v-model="max")
-button.btn.bg-white.mt-4(@click='saveSettings()') Сохранить
+button.btn.bg-green-400.mt-4(@click='saveSettings()') Сохранить
 div.round(v-for="round in answers")
   div.example(v-for="example in round" :class="example.success?'bg-green-400':'bg-pink-400'") {{ example.question }} {{ example.answer }} ({{example.time.toFixed(2)+"сек" || "-"}})
 button.btn.bg-pink-600(@click='clearAnswers') Очистить

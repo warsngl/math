@@ -4,8 +4,9 @@ import { createRouter,createWebHashHistory } from 'vue-router'
 import store from './store'
 import App from './App.vue'
 import './assets/index.css'
-import Main from './components/Main.vue'
-import Settings from './components/Settings.vue'
+import './assets/main.css'
+import Main from './views/Main.vue'
+import Settings from './views/Settings.vue'
 
 const routes=[
   {path:'/', component: Main},
