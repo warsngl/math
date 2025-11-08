@@ -1,33 +1,23 @@
 #app {
-    @apply bg-purple-700 min-w-[100vw] min-h-[100vh] p-[20px];
-  }
-  .btn {
-    @apply rounded w-24 my-2 py-1 font-bold;
-  }
-  .answer {
-    @apply text-2xl pl-2 bg-transparent outline-none border-b border-black;
-  }
-  .bg-green-init {
-    @apply bg-green-200;
-  }
-  .bg-pink-init {
-    @apply bg-pink-200;
-  }
-  .round {
-    @apply mt-2;
-  }
-  .example {
-    @apply min-w-[3rem] px-2 text-center mt-2 rounded font-bold;
-  }
-  .select {
-    @apply ml-2 bg-transparent;
-  }
-  .select option {
-    @apply bg-transparent;
-  }
-  .navbar {
-    @apply flex justify-around;
-  }
-  .router-link-exact-active {
-    text-decoration: underline;
-  }
+  @apply bg-purple-900 min-w-[100vw] min-h-[100vh];
+}
+
+.btn-primary {
+  @apply rounded-lg font-bold transition-all duration-200 transform hover:scale-105 shadow-lg;
+}
+
+.btn-secondary {
+  @apply rounded-lg font-bold transition-all duration-200 transform hover:scale-105 shadow-lg;
+}
+
+.answer-input {
+  @apply text-2xl bg-purple-700 border-2 border-purple-500 text-white placeholder-purple-300 rounded-lg;
+}
+
+.navbar {
+  @apply flex justify-around items-center;
+}
+
+.router-link-exact-active {
+  @apply bg-green-500;
+}
